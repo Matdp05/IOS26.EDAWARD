@@ -16,11 +16,13 @@ spicetify apply
 
 ## Menu de configuration
 
-Dans Spotify, ouvre le menu profil (en haut à droite) → **IOS26** :
+Clique sur le bouton **IOS26** (icône réglages, près des flèches de
+navigation en haut) pour ouvrir le panneau :
 
-- **Sombre / Clair / Auto (système)** — bascule instantanée, sans `spicetify apply`
-- **Fond pochette** — active/désactive le fond dynamique tiré de la pochette
-- **Flou : subtil / normal / fort** — intensité du verre
+- **Schéma** : Sombre / Clair / Auto (suit Windows) — bascule instantanée,
+  sans `spicetify apply`
+- **Fond pochette** : active/désactive le fond dynamique tiré de la pochette
+- **Flou** : subtil / normal / fort — intensité du verre
 
 Les réglages sont mémorisés entre les sessions.
 

@@ -30,6 +30,115 @@ body.ios26-no-art #ios26-backdrop .layer {
   opacity: 0 !important;
 }
 
+/* Bouton IOS26 de la barre du haut : un peu plus grand, décalé à droite */
+button[title="IOS26"],
+button[aria-label="IOS26"] {
+  margin-left: 14px;
+  padding: 6px;
+}
+button[title="IOS26"] svg,
+button[aria-label="IOS26"] svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Panneau de configuration IOS26 ─────────────────────────────── */
+#ios26-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 320px;
+  padding: 8px 4px 16px;
+}
+#ios26-settings .ios26-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+#ios26-settings .ios26-label {
+  font-size: 15px;
+  color: var(--spice-text);
+}
+#ios26-settings .ios26-seg {
+  display: flex;
+  background: rgba(var(--spice-rgb-text), 0.08);
+  border-radius: 999px;
+  padding: 3px;
+}
+#ios26-settings .ios26-seg button {
+  border: none;
+  background: transparent;
+  color: var(--spice-text);
+  padding: 6px 14px;
+  border-radius: 999px !important;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+#ios26-settings .ios26-seg button.active {
+  background: var(--spice-button);
+  color: #ffffff;
+}
+#ios26-settings .ios26-switch {
+  position: relative;
+  width: 46px;
+  height: 28px;
+  border-radius: 999px !important;
+  background: rgba(var(--spice-rgb-text), 0.2);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+#ios26-settings .ios26-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+#ios26-settings .ios26-switch.on {
+  background: var(--spice-button);
+}
+#ios26-settings .ios26-switch.on::after {
+  transform: translateX(18px);
+}
+
+/* Tokens natifs Spotify (encore) remappés vers la palette du thème :
+   sans ça, la barre de lecture « dwp » et certaines cartes suivent le
+   thème clair/sombre natif de Spotify au lieu du schéma IOS26. */
+:root, body, #main, .Root {
+  --background-base: var(--spice-main) !important;
+  --background-elevated-base: var(--spice-card) !important;
+  --background-highlight: var(--spice-highlight) !important;
+  --background-elevated-highlight: var(--spice-highlight-elevated) !important;
+  --background-press: var(--spice-tab-active) !important;
+  --background-elevated-press: var(--spice-tab-active) !important;
+  --background-tinted-base: rgba(var(--spice-rgb-text), 0.08) !important;
+  --background-tinted-highlight: rgba(var(--spice-rgb-text), 0.12) !important;
+  --background-tinted-press: rgba(var(--spice-rgb-text), 0.16) !important;
+  --text-base: var(--spice-text) !important;
+  --text-subdued: var(--spice-subtext) !important;
+  --text-bright-accent: var(--spice-button) !important;
+  --essential-base: var(--spice-text) !important;
+  --essential-subdued: var(--spice-subtext) !important;
+  --essential-bright-accent: var(--spice-button) !important;
+  --decorative-base: var(--spice-text) !important;
+  --decorative-subdued: rgba(var(--spice-rgb-text), 0.5) !important;
+}
+
+/* La barre de lecture garde son verre : ses conteneurs internes ne
+   doivent pas peindre de fond opaque par-dessus. */
+.Root__now-playing-bar > *,
+.Root__now-playing-bar > * > * {
+  background-color: transparent !important;
+}
+
 html, body, #main, .Root, .Root__top-container {
   background: transparent !important;
   font-family: "SF Pro Display", "SF Pro Text", "Segoe UI Variable Display",
