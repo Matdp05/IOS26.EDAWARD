@@ -13,6 +13,18 @@
   --ios-shadow: 0 8px 32px rgba(var(--spice-rgb-shadow), 0.35);
 }
 
+/* Schéma clair (classe posée par theme.js) : verre plus opaque, lisible */
+body.ios26-light {
+  --glass-bg: rgba(var(--spice-rgb-sidebar), 0.74);
+  --glass-bg-strong: rgba(var(--spice-rgb-card), 0.86);
+  --glass-border: rgba(var(--spice-rgb-text), 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.65);
+  --ios-shadow: 0 8px 28px rgba(var(--spice-rgb-shadow), 0.25);
+}
+body.ios26-light #ios26-backdrop::after {
+  background: rgba(var(--spice-rgb-main), 0.66);
+}
+
 html, body, #main, .Root, .Root__top-container {
   background: transparent !important;
   font-family: "SF Pro Display", "SF Pro Text", "Segoe UI Variable Display",
@@ -139,6 +151,13 @@ input,
   border: 1px solid var(--glass-border) !important;
 }
 
+/* ── Cartes promo de la bibliothèque ────────────────────────────── */
+.main-yourLibraryX-entryPoints > div,
+.main-yourLibraryX-entryPoints section {
+  background: rgba(var(--spice-rgb-card), 0.6) !important;
+  border-radius: var(--ios-radius-md);
+  border: 1px solid var(--glass-border);
+}
 /* ── Cartes ─────────────────────────────────────────────────────── */
 .main-card-card {
   background: rgba(var(--spice-rgb-card), 0.45);

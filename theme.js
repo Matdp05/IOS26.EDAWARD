@@ -14,6 +14,17 @@
   }
   document.body.prepend(backdrop);
 
+  // Schéma clair : verre plus opaque pour préserver la lisibilité.
+  function schemeIsLight() {
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue("--spice-rgb-main")
+      .split(",")
+      .map(Number);
+    if (raw.length !== 3 || raw.some(isNaN)) return false;
+    return 0.299 * raw[0] + 0.587 * raw[1] + 0.114 * raw[2] > 127;
+  }
+  document.body.classList.toggle("ios26-light", schemeIsLight());
+
   let active = 0;
   let currentUrl = "";
 
