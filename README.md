@@ -14,7 +14,17 @@ spicetify config color_scheme dark
 spicetify apply
 ```
 
-## Schémas
+## Menu de configuration
+
+Dans Spotify, ouvre le menu profil (en haut à droite) → **IOS26** :
+
+- **Sombre / Clair / Auto (système)** — bascule instantanée, sans `spicetify apply`
+- **Fond pochette** — active/désactive le fond dynamique tiré de la pochette
+- **Flou : subtil / normal / fort** — intensité du verre
+
+Les réglages sont mémorisés entre les sessions.
+
+## Schémas (via CLI, optionnel)
 
 - `dark` — verre fumé (défaut)
 - `light` — verre givré : `spicetify config color_scheme light && spicetify apply`
