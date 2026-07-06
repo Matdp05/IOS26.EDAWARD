@@ -121,6 +121,7 @@
       root.style.setProperty("--spice-rgb-" + key, hexToRgb(palette[key]));
     }
     root.style.setProperty("--glass-blur", BLUR[settings.blur]);
+    root.style.setProperty("--backdrop-dim", backdropDim());
     document.body.classList.toggle("ios26-light", name === "light");
     document.body.classList.toggle("ios26-amoled", name === "amoled");
     document.body.classList.toggle("ios26-no-blur", settings.blur === "off");
@@ -165,17 +166,63 @@
     return raw.replace("spotify:image:", "https://i.scdn.co/image/");
   }
 
+  let artLuminance = null; // 0..1 ; null = inconnue (pas de pochette / échec)
+
+  function measureLuminance(img) {
+    try {
+      const size = 16;
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, size, size);
+      const data = ctx.getImageData(0, 0, size, size).data;
+      let sum = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        sum += 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
+      }
+      return sum / (data.length / 4) / 255;
+    } catch (_) {
+      return null; // canvas tainted ou indisponible : on garde le défaut
+    }
+  }
+
+  function backdropDim() {
+    const name = resolvedScheme();
+    if (artLuminance === null) {
+      return name === "light" ? "0.66" : name === "amoled" ? "0.60" : "0.52";
+    }
+    let dim;
+    if (name === "light") {
+      // pochette sombre → overlay clair plus opaque
+      dim = 0.58 + (1 - artLuminance) * 0.16; // 0,58 → 0,74
+    } else if (name === "amoled") {
+      dim = 0.55 + artLuminance * 0.23; // 0,55 → 0,78
+    } else {
+      // pochette claire → overlay sombre plus opaque
+      dim = 0.45 + artLuminance * 0.25; // 0,45 → 0,70
+    }
+    return dim.toFixed(2);
+  }
+
   function update() {
     const url = artworkUrl();
     if (!url || url === currentUrl) return;
     currentUrl = url;
     const next = 1 - active;
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => {
+      artLuminance = measureLuminance(img);
+      document.documentElement.style.setProperty("--backdrop-dim", backdropDim());
       layers[next].style.backgroundImage = 'url("' + url + '")';
       layers[next].classList.add("visible");
       layers[active].classList.remove("visible");
       active = next;
+    };
+    img.onerror = () => {
+      artLuminance = null;
+      document.documentElement.style.setProperty("--backdrop-dim", backdropDim());
     };
     img.src = url;
   }
