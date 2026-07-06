@@ -69,7 +69,7 @@
   };
 
   const STORAGE_KEY = "ios26:settings";
-  const BLUR = { subtil: "24px", normal: "42px", fort: "64px" };
+  const BLUR = { off: "0px", subtil: "24px", normal: "42px", fort: "64px" };
 
   const ACCENTS = {
     red: { dark: "FF453A", light: "FF3B30" },
@@ -123,6 +123,7 @@
     root.style.setProperty("--glass-blur", BLUR[settings.blur]);
     document.body.classList.toggle("ios26-light", name === "light");
     document.body.classList.toggle("ios26-amoled", name === "amoled");
+    document.body.classList.toggle("ios26-no-blur", settings.blur === "off");
     document.body.classList.toggle("ios26-no-art", !settings.artwork);
   }
 
@@ -282,6 +283,7 @@
       segRow(
         "Flou",
         [
+          { label: "Désactivé", value: "off" },
           { label: "Subtil", value: "subtil" },
           { label: "Normal", value: "normal" },
           { label: "Fort", value: "fort" },

@@ -36,6 +36,37 @@ body.ios26-amoled #ios26-backdrop::after {
   background: rgba(0, 0, 0, var(--backdrop-dim, 0.6));
 }
 
+/* Flou désactivé (basses perfs) : plus aucun backdrop-filter, panneaux
+   opacifiés pour rester lisibles. Le flou de la pochette de fond est
+   conservé (rendu une seule fois par image, coût négligeable). */
+body.ios26-no-blur * {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+body.ios26-no-blur {
+  --glass-bg: rgba(var(--spice-rgb-sidebar), 0.92);
+  --glass-bg-strong: rgba(var(--spice-rgb-card), 0.95);
+}
+body.ios26-no-blur #context-menu,
+body.ios26-no-blur .main-contextMenu-menu,
+body.ios26-no-blur .main-popover,
+body.ios26-no-blur .popup,
+body.ios26-no-blur .main-dropdown-menu,
+body.ios26-no-blur .main-contextMenu-tippy,
+body.ios26-no-blur .GenericModal > div {
+  background: rgba(var(--spice-rgb-card), 0.96) !important;
+}
+body.ios26-no-blur .marketplace-header,
+body.ios26-no-blur .main-trackList-trackListHeader,
+body.ios26-no-blur .main-topBar-container {
+  background: rgba(var(--spice-rgb-sidebar), 0.96) !important;
+}
+body.ios26-no-blur input,
+body.ios26-no-blur .x-filterBox-filterInput,
+body.ios26-no-blur .main-globalNav-searchInput {
+  background: rgba(var(--spice-rgb-card), 0.9) !important;
+}
+
 /* Fond pochette désactivé via le menu IOS26 : dégradé statique seul */
 body.ios26-no-art #ios26-backdrop .layer {
   opacity: 0 !important;
