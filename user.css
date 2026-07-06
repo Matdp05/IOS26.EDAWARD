@@ -30,16 +30,33 @@ body.ios26-no-art #ios26-backdrop .layer {
   opacity: 0 !important;
 }
 
-/* Bouton IOS26 de la barre du haut : un peu plus grand, décalé à droite */
+/* La barre du haut redevient un panneau flottant : on annule les marges
+   négatives de Spotify qui la collaient aux panneaux du dessous. */
+.Root__globalNav {
+  margin: 0 !important;
+}
+
+/* Bouton IOS26 : pastille bleue iOS assortie au thème */
 button[title="IOS26"],
 button[aria-label="IOS26"] {
+  width: 34px;
+  height: 34px;
   margin-left: 14px;
-  padding: 6px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50% !important;
+  background: var(--spice-button) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(var(--spice-rgb-button), 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 button[title="IOS26"] svg,
 button[aria-label="IOS26"] svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  fill: #ffffff;
 }
 
 /* ── Panneau de configuration IOS26 ─────────────────────────────── */
