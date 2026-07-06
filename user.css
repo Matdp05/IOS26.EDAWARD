@@ -113,12 +113,12 @@ button[aria-label="IOS26"] svg {
    sans ça, la barre de lecture « dwp » et certaines cartes suivent le
    thème clair/sombre natif de Spotify au lieu du schéma IOS26. */
 :root, body, #main, .Root {
-  --background-base: var(--spice-main) !important;
-  --background-elevated-base: var(--spice-card) !important;
-  --background-highlight: var(--spice-highlight) !important;
-  --background-elevated-highlight: var(--spice-highlight-elevated) !important;
-  --background-press: var(--spice-tab-active) !important;
-  --background-elevated-press: var(--spice-tab-active) !important;
+  --background-base: rgba(var(--spice-rgb-main), 0.25) !important;
+  --background-elevated-base: rgba(var(--spice-rgb-card), 0.4) !important;
+  --background-highlight: rgba(var(--spice-rgb-text), 0.07) !important;
+  --background-elevated-highlight: rgba(var(--spice-rgb-text), 0.1) !important;
+  --background-press: rgba(var(--spice-rgb-text), 0.14) !important;
+  --background-elevated-press: rgba(var(--spice-rgb-text), 0.14) !important;
   --background-tinted-base: rgba(var(--spice-rgb-text), 0.08) !important;
   --background-tinted-highlight: rgba(var(--spice-rgb-text), 0.12) !important;
   --background-tinted-press: rgba(var(--spice-rgb-text), 0.16) !important;
@@ -304,6 +304,8 @@ input,
 .main-contextMenu-menu,
 .main-popover,
 .popup,
+.main-dropdown-menu,
+.main-contextMenu-tippy,
 .GenericModal > div {
   background: rgba(var(--spice-rgb-card), 0.72) !important;
   -webkit-backdrop-filter: blur(32px) saturate(1.8);
@@ -314,6 +316,16 @@ input,
 }
 .main-contextMenu-menuItemButton {
   border-radius: var(--ios-radius-sm) !important;
+}
+
+/* ── Barres sticky en verre (tri Marketplace, en-têtes de listes) ── */
+.marketplace-header,
+.main-trackList-trackListHeader,
+.main-topBar-container {
+  background: rgba(var(--spice-rgb-sidebar), 0.78) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(1.8);
+  backdrop-filter: blur(32px) saturate(1.8);
+  border: none;
 }
 
 /* ── Scrollbars fines façon iOS ─────────────────────────────────── */
