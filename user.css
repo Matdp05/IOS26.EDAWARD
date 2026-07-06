@@ -127,6 +127,28 @@ button[aria-label="IOS26"] svg {
 #ios26-settings .ios26-switch.on::after {
   transform: translateX(18px);
 }
+#ios26-settings .ios26-accents {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+#ios26-settings .ios26-dot {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 50% !important;
+  background: var(--dot);
+  transition: transform 0.15s ease;
+}
+#ios26-settings .ios26-dot:hover {
+  transform: scale(1.15);
+}
+#ios26-settings .ios26-dot.active {
+  box-shadow: 0 0 0 2px var(--spice-card), 0 0 0 4px var(--dot);
+}
 
 /* Tokens natifs Spotify (encore) remappés vers la palette du thème :
    sans ça, la barre de lecture « dwp » et certaines cartes suivent le

@@ -54,12 +54,25 @@
   const STORAGE_KEY = "ios26:settings";
   const BLUR = { subtil: "24px", normal: "42px", fort: "64px" };
 
-  const settings = { scheme: "dark", artwork: true, blur: "normal" };
+  const ACCENTS = {
+    red: { dark: "FF453A", light: "FF3B30" },
+    orange: { dark: "FF9F0A", light: "FF9500" },
+    yellow: { dark: "FFD60A", light: "FFCC00" },
+    green: { dark: "30D158", light: "34C759" },
+    teal: { dark: "64D2FF", light: "5AC8FA" },
+    blue: { dark: "0A84FF", light: "007AFF" },
+    indigo: { dark: "5E5CE6", light: "5856D6" },
+    purple: { dark: "BF5AF2", light: "AF52DE" },
+    pink: { dark: "FF375F", light: "FF2D55" },
+  };
+
+  const settings = { scheme: "dark", artwork: true, blur: "normal", accent: "blue" };
   try {
     Object.assign(settings, JSON.parse(localStorage.getItem(STORAGE_KEY)) || {});
   } catch (_) {}
   if (!SCHEMES[settings.scheme] && settings.scheme !== "auto") settings.scheme = "dark";
   if (!BLUR[settings.blur]) settings.blur = "normal";
+  if (!ACCENTS[settings.accent]) settings.accent = "blue";
 
   function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
@@ -80,7 +93,11 @@
 
   function render() {
     const name = resolvedScheme();
-    const palette = SCHEMES[name];
+    const palette = Object.assign({}, SCHEMES[name]);
+    const accent = ACCENTS[settings.accent][name === "light" ? "light" : "dark"];
+    palette.button = accent;
+    palette["button-active"] = accent;
+    palette.notification = accent;
     const root = document.documentElement;
     for (const key of Object.keys(palette)) {
       root.style.setProperty("--spice-" + key, "#" + palette[key]);
@@ -147,6 +164,11 @@
     save();
     render();
   }
+  function pickAccent(name) {
+    settings.accent = name;
+    save();
+    render();
+  }
   function toggleArtwork() {
     settings.artwork = !settings.artwork;
     save();
@@ -194,6 +216,32 @@
     return row;
   }
 
+  function accentRow() {
+    const row = document.createElement("div");
+    row.className = "ios26-row";
+    const label = document.createElement("span");
+    label.className = "ios26-label";
+    label.textContent = "Accent";
+    const dots = document.createElement("div");
+    dots.className = "ios26-accents";
+    for (const name of Object.keys(ACCENTS)) {
+      const dot = document.createElement("button");
+      dot.className = "ios26-dot" + (name === settings.accent ? " active" : "");
+      dot.style.setProperty("--dot", "#" + ACCENTS[name].dark);
+      dot.setAttribute("aria-label", "Accent " + name);
+      dot.onclick = () => {
+        pickAccent(name);
+        for (const other of dots.querySelectorAll("button")) {
+          other.classList.remove("active");
+        }
+        dot.classList.add("active");
+      };
+      dots.appendChild(dot);
+    }
+    row.append(label, dots);
+    return row;
+  }
+
   function openSettings() {
     const ui = document.createElement("div");
     ui.id = "ios26-settings";
@@ -209,6 +257,7 @@
         pickScheme
       )
     );
+    ui.appendChild(accentRow());
     ui.appendChild(switchRow("Fond pochette", settings.artwork, toggleArtwork));
     ui.appendChild(
       segRow(
