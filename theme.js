@@ -127,8 +127,18 @@
     document.body.classList.toggle("ios26-no-art", !settings.artwork);
   }
 
+  let themingTimer = 0;
+  function smoothRender() {
+    document.body.classList.add("ios26-theming");
+    render();
+    clearTimeout(themingTimer);
+    themingTimer = setTimeout(function () {
+      document.body.classList.remove("ios26-theming");
+    }, 350);
+  }
+
   media.addEventListener("change", () => {
-    if (settings.scheme === "auto") render();
+    if (settings.scheme === "auto") smoothRender();
   });
 
   /* ── Fond dynamique : pochette du morceau en cours, floutée ─────── */
@@ -176,22 +186,22 @@
   function pickScheme(name) {
     settings.scheme = name;
     save();
-    render();
+    smoothRender();
   }
   function pickBlur(level) {
     settings.blur = level;
     save();
-    render();
+    smoothRender();
   }
   function pickAccent(name) {
     settings.accent = name;
     save();
-    render();
+    smoothRender();
   }
   function toggleArtwork() {
     settings.artwork = !settings.artwork;
     save();
-    render();
+    smoothRender();
   }
 
   function segRow(labelText, options, current, onPick) {

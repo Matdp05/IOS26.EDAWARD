@@ -67,6 +67,14 @@ body.ios26-no-blur .main-globalNav-searchInput {
   background: rgba(var(--spice-rgb-card), 0.9) !important;
 }
 
+/* Transition douce lors d'un changement de schéma/accent : la classe est
+   posée ~350ms par theme.js puis retirée (aucun coût permanent). */
+body.ios26-theming,
+body.ios26-theming * {
+  transition: background-color 0.25s ease, background 0.25s ease,
+    color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
 /* Fond pochette désactivé via le menu IOS26 : dégradé statique seul */
 body.ios26-no-art #ios26-backdrop .layer {
   opacity: 0 !important;
